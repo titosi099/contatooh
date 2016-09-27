@@ -1,5 +1,5 @@
 module.exports = function(app) {
   var controller = app.controllers.home;
-  app.get('/', controller.index);
-  app.get('/index', controller.home);
+  app.get('/', controller.home);
+  app.get('/index', controller.index);
 }
