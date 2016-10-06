@@ -1,28 +1,28 @@
-angular.module('contatooh').controller('ContatosController', function($scope) {
-  $scope.total = 0;
-  $scope.incrementa = function() {
-    $scope.total++;
+angular.module('contatooh').controller('ContatosController', function($scope, Contato) {
+
+  $scope.contatos = [];
+  $scope.filtro = '';
+  $scope.mensagem = {texto: ''};
+
+  function buscaContatos() {
+    Contato.query(
+      function(contatos) {
+        $scope.contatos = contatos;
+        $scope.mensagem = {};
+      },
+      function(erro) {
+        $scope.mensagem = {texto: "Não foi possível obter a lista de contatos"};
+      }
+    );
+  }
+  buscaContatos();
+
+  $scope.remove = function(contato) {
+    var promise = Contato.delete({id: contato._id}).$promise;
+    promise
+      .then(buscaContatos)
+      .catch(function (erro) {
+        $scope.mensagem = {text: "Não foi possível remover o contato"};
+      })
   };
-  $scope.contatos = [
-    {
-      "_id": 1,
-      "nome": "contato 1",
-      "email": "contato1@mail.com"
-    },
-    {
-      "_id": 2,
-      "nome": "contato 2",
-      "email": "contato2@mail.com"
-    },
-    {
-      "_id": 3,
-      "nome": "contato 3",
-      "email": "contato3@mail.com"
-    },
-    {
-      "_id": 4,
-      "nome": "contato 4",
-      "email": "contato4@mail.com"
-    }
-  ];
 });
