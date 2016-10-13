@@ -2,7 +2,7 @@ module.exports = function(app) {
   var controller = app.controllers.contato;
 
   app.route('/contatos')
-    .get(controller.listaContatos);
+    .get(controller.listaTodos);
 
   app.route('/contatos/:id')
     .get(controller.obtemContato)
